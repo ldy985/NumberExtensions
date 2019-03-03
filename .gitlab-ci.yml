@@ -22,6 +22,7 @@ build:
       - artifacts
   script:
     - dotnet tool install --global GitVersion.Tool --version 5.0.0-beta2-4
+    - export PATH="$PATH:/root/.dotnet/tools"
     - bash ./build.sh build
 
 test:
