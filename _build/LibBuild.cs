@@ -65,9 +65,9 @@ class LibBuild : NukeBuild
             DotNetBuild(s => s
                 .SetProjectFile(Solution)
                 .SetConfiguration(Configuration)
-                .SetAssemblyVersion(determineVersionInfo.AssemblyVersion)
-                .SetFileVersion(determineVersionInfo.AssemblyFileVersion)
-                .SetInformationalVersion(determineVersionInfo.AssemblyInformationalVersion)
+                .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
+                .SetFileVersion(GitVersion.GetNormalizedFileVersion())
+                .SetInformationalVersion(GitVersion.InformationalVersion)
                 .EnableNoRestore());
         });
 
@@ -108,7 +108,6 @@ class LibBuild : NukeBuild
                         .SetApiKey(MyGetApiKey));
                 });
          });
-
     public static VersionInfo DetermineVersionInfo(bool ForProd)
     {
         string globalTool = Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\.dotnet\tools\dotnet-gitversion.exe");
