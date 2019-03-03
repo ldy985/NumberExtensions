@@ -1,5 +1,8 @@
 using System;
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;
@@ -57,12 +60,14 @@ class LibBuild : NukeBuild
         .Before(Test)
         .Executes(() =>
         {
+            VersionInfo determineVersionInfo = DetermineVersionInfo(Configuration == Configuration.Release);
+
             DotNetBuild(s => s
                 .SetProjectFile(Solution)
                 .SetConfiguration(Configuration)
-                .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
-                .SetFileVersion(GitVersion.GetNormalizedFileVersion())
-                .SetInformationalVersion(GitVersion.InformationalVersion)
+                .SetAssemblyVersion(determineVersionInfo.AssemblyVersion)
+                .SetFileVersion(determineVersionInfo.AssemblyFileVersion)
+                .SetInformationalVersion(determineVersionInfo.AssemblyInformationalVersion)
                 .EnableNoRestore());
         });
 
@@ -104,5 +109,61 @@ class LibBuild : NukeBuild
                 });
          });
 
+    public static VersionInfo DetermineVersionInfo(bool ForProd)
+    {
+        string globalTool = Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\.dotnet\tools\dotnet-gitversion.exe");
+        string globalToolUnix = Environment.ExpandEnvironmentVariables($"$HOME/.dotnet/tools");
+        string dotnetTool = ToolPathResolver.GetPathExecutable("dotnet");
 
+        IProcess res;
+        if (File.Exists(globalTool))
+        {
+            // Try using the global tool
+            Logger.Trace($"Attempting to use {globalTool}");
+
+            res = ProcessTasks.StartProcess(globalTool, logOutput: false).AssertWaitForExit();
+        }
+        else if (File.Exists(globalToolUnix))
+        {
+            // Try using the global tool
+            Logger.Trace($"Attempting to use {globalToolUnix}");
+
+            res = ProcessTasks.StartProcess(globalToolUnix, logOutput: false).AssertWaitForExit();
+        }
+        else
+        {
+            // Try through dotnet
+            res = ProcessTasks.StartProcess(dotnetTool, "gitversion", logOutput: false).AssertWaitForExit();
+        }
+
+        if (res.ExitCode != 0)
+            throw new Exception("Unable to run 'dotnet gitversion', install using https://www.nuget.org/packages/GitVersion.Tool");
+
+        string json = string.Join("", res.Output.Where(s => s.Type == OutputType.Std).Select(s => s.Text));
+
+        JObject obj = JsonConvert.DeserializeObject<JObject>(json);
+
+        string suffix = ForProd ? string.Empty : "-alpha";
+
+        string nugetVersion = obj.Value<string>("AssemblySemFileVer") + suffix;
+        string informationalVersion = $"{nugetVersion}+branch:{obj.Value<string>("BranchName")}+sha:{obj.Value<string>("Sha")}";
+
+        return new VersionInfo
+        {
+            AssemblyVersion = obj.Value<string>("AssemblySemVer"),
+            AssemblyFileVersion = obj.Value<string>("AssemblySemFileVer"),
+            AssemblyInformationalVersion = informationalVersion,
+            NugetVersion = nugetVersion
+        };
+    }
+
+
+}
+
+class VersionInfo
+{
+    public string AssemblyVersion { get; set; }
+    public string AssemblyFileVersion { get; set; }
+    public string AssemblyInformationalVersion { get; set; }
+    public string NugetVersion { get; set; }
 }
