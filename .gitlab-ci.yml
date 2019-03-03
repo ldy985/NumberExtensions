@@ -21,19 +21,19 @@ build:
     paths:
       - artifacts
   script:
-    - ./build.ps1 build
+    - bash ./build.sh build
 
 test:
   stage: test
   dependencies:
     - build
   script:
-    - ./build.ps1 test
+    - bash ./build.sh test
      
 deploy:
   stage: deploy
   script:
-    - ./build.ps1 pack+push -MyGetSource $FEED_URL -MyGetApiKey $API_KEY
+    - bash ./build.sh pack+push -MyGetSource $FEED_URL -MyGetApiKey $API_KEY
   when: manual
   only:
   - master
