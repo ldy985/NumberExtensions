@@ -4,6 +4,11 @@ variables:
   FEED_URL: http://192.168.2.149:5555/v3/index.json
   API_KEY: NUGET-SERVER-API-KEY
 
+cache:
+  key: "$CI_PROJECT_NAMESPACE-$CI_PROJECT_NAME"
+  paths:
+    - .nuget/
+
 stages:
 - build
 - test
