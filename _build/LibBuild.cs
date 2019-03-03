@@ -60,7 +60,7 @@ class LibBuild : NukeBuild
         .Before(Test)
         .Executes(() =>
         {
-            VersionInfo determineVersionInfo = DetermineVersionInfo(Configuration == Configuration.Release);
+            //VersionInfo determineVersionInfo = DetermineVersionInfo(Configuration == Configuration.Release);
 
             DotNetBuild(s => s
                 .SetProjectFile(Solution)
