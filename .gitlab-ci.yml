@@ -1,6 +1,7 @@
-image: microsoft/dotnet:latest
+image: registry.gitlab.com/ldy985/dotnetsdk_gitversion:dotnet
 
 variables:
+  GIT_SUBMODULE_STRATEGY: normal
   FEED_URL: http://192.168.2.149:5555/v3/index.json
   API_KEY: NUGET-SERVER-API-KEY
 
@@ -19,10 +20,14 @@ build:
   artifacts:
     expire_in: 12 hours
     paths:
-      - artifacts
+      - "*/bin"
+      - "*/obj"
   script:
+<<<<<<< HEAD
     - dotnet tool install --global GitVersion.Tool --version 5.0.0-beta2-4
     - export PATH="$PATH:/root/.dotnet/tools"
+=======
+>>>>>>> develop
     - bash ./build.sh build
 
 test:
@@ -34,9 +39,13 @@ test:
      
 deploy:
   stage: deploy
+  dependencies:
+    - build
+  artifacts:
+    expire_in: 14 days
+    paths:
+      - artifacts
   script:
     - bash ./build.sh pack+push -MyGetSource $FEED_URL -MyGetApiKey $API_KEY
   when: manual
-  only:
-  - master
- 
+
