@@ -21,7 +21,7 @@ build:
       - "*/bin"
       - "*/obj"
   script:
-    - bash ./build.sh build
+    - bash ./build.sh build --for-prod
 
 test:
   stage: test
