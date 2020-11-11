@@ -4,6 +4,7 @@
     <Authors>Lasse Dyrsted</Authors>
     <Copyright>Copyright 2020, by Lasse Dyrsted. All rights reserved.</Copyright>
     <Description>Project1</Description>
+    <Version>0.1.0-alpha1</Version>
 
     <!-- Set copying files etc. to timeout faster -->
     <CopyRetryCount>2</CopyRetryCount>
