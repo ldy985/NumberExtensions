@@ -1,4 +1,4 @@
-image: mcr.microsoft.com/dotnet/sdk:5.0
+image: registry.gitlab.com/ldy985/dotnetsdk_gitversion
 
 variables:
   GIT_SUBMODULE_STRATEGY: normal
