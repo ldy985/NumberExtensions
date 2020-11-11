@@ -2,7 +2,6 @@ image: mcr.microsoft.com/dotnet/sdk:5.0
 
 variables:
   GIT_SUBMODULE_STRATEGY: normal
-  FEED_URL: $CI_SERVER_URL/api/v4/projects/$CI_PROJECT_ID/packages/nuget/index.json
 
 cache:
   key: "$CI_PROJECT_NAMESPACE-$CI_PROJECT_NAME"
@@ -40,6 +39,6 @@ deploy:
     paths:
       - artifacts
   script:
-    - bash ./build.sh pack+push -MyGetSource $FEED_URL -MyGetApiKey $CI_JOB_TOKEN
+    - bash ./build.sh pack+push -Path $FEED_URL -ApiKey $FEED_KEY
   when: manual
 
