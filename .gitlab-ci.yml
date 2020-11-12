@@ -1,4 +1,4 @@
-image: registry.gitlab.com/ldy985/dotnetsdk_gitversion
+image: mcr.microsoft.com/dotnet/sdk:5.0
 
 variables:
   GIT_SUBMODULE_STRATEGY: normal
@@ -21,7 +21,6 @@ build:
       - "*/bin"
       - "*/obj"
   script:
-    - bash dotnet-gitversion
     - bash ./build.sh build --for-prod
 
 test:
