@@ -18,3 +18,4 @@ branches:
     increment: None
 ignore:
   sha: []
+merge-message-formats: {}
