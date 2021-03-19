@@ -1,20 +1,36 @@
 ﻿using System;
 using System.Buffers.Binary;
+using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
 namespace ldy985.NumberExtensions
 {
     public static partial class NumberExtensions
     {
+        /// <summary>
+        ///     Checks whether or not a given bit is set.
+        /// </summary>
+        /// <param name="value">The input <see cref="ulong" /> value.</param>
+        /// <param name="pos">The position of the bit to check (in [0, 63] range).</param>
+        /// <returns>Whether or not the n-th bit is set.</returns>
+        /// <remarks>
+        ///     This method doesn't validate <paramref name="pos" /> against the valid range.
+        ///     If the parameter is not valid, the result will just be inconsistent.
+        ///     Additionally, no conditional branches are used to retrieve the flag.
+        /// </remarks>
+        [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool GetBit(this ulong value, byte pos)
+        public static unsafe bool GetBit(this ulong value, byte pos)
         {
-            return ((value >> pos) & 1) != 0;
+            // Same logic as the uint version, see that for more info
+            byte flag = (byte) ((value >> pos) & 1);
+
+            return *(bool*) &flag;
         }
 
         public static string ToBinary(this ulong value)
         {
-            return Convert.ToString((long)value, 2).PadLeft(64, _paddingChar);
+            return Convert.ToString((long) value, 2).PadLeft(64, _paddingChar);
         }
 
         /// <summary>Reverses the order of bytes in a 64-bit unsigned integer.</summary>
