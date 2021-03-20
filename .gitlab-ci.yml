@@ -40,6 +40,6 @@ deploy:
       - artifacts
   script:
     - dotnet pack -c Release src/NumberExtensions.sln -o artifacts
-    - dotnet nuget push --skip-duplicate -k $FEED_KEY -s $FEED_URL artifacts/*
+    - dotnet nuget push --skip-duplicate -k "$FEED_KEY" -s "$FEED_URL" "artifacts/**"
   when: manual
 
