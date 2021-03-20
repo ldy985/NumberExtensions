@@ -28,7 +28,7 @@ test:
   dependencies:
     - build
   script:
-    - bash ./build.sh test --for-prod
+    - dotnet test -c Release src/NumberExtensions.sln
      
 deploy:
   stage: deploy
@@ -39,6 +39,7 @@ deploy:
     paths:
       - artifacts
   script:
-    - bash ./build.sh pack+push --path $FEED_URL --api-key $FEED_KEY --for-prod
+    - dotnet pack -c Release src/NumberExtensions.sln -o artifacts
+    - dotnet nuget push --skip-duplicate -k $FEED_KEY -s $FEED_URL artifacts/*
   when: manual
 
