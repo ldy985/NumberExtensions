@@ -21,7 +21,7 @@ build:
       - "src/*/bin"
       - "src/*/obj"
   script:
-    - bash ./build.sh build --for-prod
+    - dotnet build -c Release src/NumberExtensions.sln
 
 test:
   stage: test
