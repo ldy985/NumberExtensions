@@ -15,7 +15,9 @@ jobs:
         with:
           dotnet-version: 5.0.x
 
+      - name: Restore dependencies
+        run: dotnet restore src/NumberExtensions.sln
       - name: Build
-        run: dotnet build -c Release src/NumberExtensions.sln
+        run: dotnet build --no-restore -c Release src/NumberExtensions.sln
       - name: Test
-        run: dotnet test -c Release src/NumberExtensions.sln
+        run: dotnet test --no-build --verbosity normal -c Release src/NumberExtensions.sln
