@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 
 namespace ldy985.NumberExtensions
 {
@@ -10,7 +10,6 @@ namespace ldy985.NumberExtensions
         {
             return Convert.ToString(value, 2).PadLeft(8, _paddingChar);
         }
-
 
         /// <summary>
         ///     Checks whether or not a given bit is set.
@@ -28,9 +27,9 @@ namespace ldy985.NumberExtensions
         public static unsafe bool GetBit(this byte value, byte pos)
         {
             // Same logic as the uint version, see that for more info
-            byte flag = (byte) ((value >> pos) & 1);
+            byte flag = (byte)((value >> pos) & 1);
 
-            return *(bool*) &flag;
+            return *(bool*)&flag;
         }
     }
 }

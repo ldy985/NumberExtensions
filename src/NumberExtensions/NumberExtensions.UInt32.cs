@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Buffers.Binary;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 
 namespace ldy985.NumberExtensions
 {
@@ -35,6 +35,7 @@ namespace ldy985.NumberExtensions
             return *(bool*) &flag;
         }
 
+        [Pure]
         public static string ToBinary(this uint value)
         {
             return Convert.ToString((int) value, 2).PadLeft(32, _paddingChar);
@@ -43,6 +44,7 @@ namespace ldy985.NumberExtensions
         /// <summary>Reverses the order of bytes in a 32-bit unsigned integer.</summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>The converted value.</returns>
+        [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint Reverse(this uint value)
         {
@@ -53,6 +55,7 @@ namespace ldy985.NumberExtensions
         /// <param name="value">The value to convert.</param>
         /// <returns>The converted value.</returns>
         /// <remarks>The value will be converted according the current value of <see cref="Endianness" />.</remarks>
+        [Pure]
         public static uint ToBigEndian(this uint value)
         {
             return IsBigEndian ? value : value.Reverse();
@@ -62,6 +65,7 @@ namespace ldy985.NumberExtensions
         /// <param name="value">The value to convert.</param>
         /// <returns>The converted value.</returns>
         /// <remarks>The value will be converted according the current value of <see cref="Endianness" />.</remarks>
+        [Pure]
         public static uint ToLittleEndian(this uint value)
         {
             return IsLittleEndian ? value : value.Reverse();

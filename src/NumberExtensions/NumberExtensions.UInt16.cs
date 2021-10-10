@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Buffers.Binary;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 
 namespace ldy985.NumberExtensions
 {
@@ -23,19 +23,21 @@ namespace ldy985.NumberExtensions
         public static unsafe bool GetBit(this ushort value, byte pos)
         {
             // Same logic as the uint version, see that for more info
-            byte flag = (byte) ((value >> pos) & 1);
+            byte flag = (byte)((value >> pos) & 1);
 
-            return *(bool*) &flag;
+            return *(bool*)&flag;
         }
 
+        [Pure]
         public static string ToBinary(this ushort value)
         {
-            return Convert.ToString((short) value, 2).PadLeft(16, _paddingChar);
+            return Convert.ToString((short)value, 2).PadLeft(16, _paddingChar);
         }
 
         /// <summary>Reverses the order of bytes in a 16-bit unsigned integer.</summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>The converted value.</returns>
+        [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ushort Reverse(this ushort value)
         {
@@ -46,6 +48,7 @@ namespace ldy985.NumberExtensions
         /// <param name="value">The value to convert.</param>
         /// <returns>The converted value.</returns>
         /// <remarks>The value will be converted according the current value of <see cref="Endianness" />.</remarks>
+        [Pure]
         public static ushort ToBigEndian(this ushort value)
         {
             return IsBigEndian ? value : value.Reverse();
@@ -55,6 +58,7 @@ namespace ldy985.NumberExtensions
         /// <param name="value">The value to convert.</param>
         /// <returns>The converted value.</returns>
         /// <remarks>The value will be converted according the current value of <see cref="Endianness" />.</remarks>
+        [Pure]
         public static ushort ToLittleEndian(this ushort value)
         {
             return IsLittleEndian ? value : value.Reverse();

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Buffers.Binary;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 
 namespace ldy985.NumberExtensions
 {
@@ -23,9 +23,9 @@ namespace ldy985.NumberExtensions
         public static unsafe bool GetBit(this int value, byte pos)
         {
             // Same logic as the uint version, see that for more info
-            byte flag = (byte) ((value >> pos) & 1);
+            byte flag = (byte)((value >> pos) & 1);
 
-            return *(bool*) &flag;
+            return *(bool*)&flag;
         }
 
         public static string ToBinary(this int value)
@@ -36,8 +36,19 @@ namespace ldy985.NumberExtensions
         /// <summary>Reverses the order of bytes in a 32-bit signed integer.</summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>The converted value.</returns>
+        [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Reverse(this int value)
+        {
+            return BinaryPrimitives.ReverseEndianness(value);
+        }
+
+        /// <summary>Reverses the order of bytes in a 32-bit signed integer.</summary>
+        /// <param name="value">The value to convert.</param>
+        /// <returns>The converted value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int Reverse2(this in int value)
         {
             return BinaryPrimitives.ReverseEndianness(value);
         }
@@ -46,6 +57,7 @@ namespace ldy985.NumberExtensions
         /// <param name="value">The value to convert.</param>
         /// <returns>The converted value.</returns>
         /// <remarks>The value will be converted according the current value of <see cref="Endianness" />.</remarks>
+        [Pure]
         public static int ToBigEndian(this int value)
         {
             return IsBigEndian ? value : value.Reverse();
@@ -55,6 +67,7 @@ namespace ldy985.NumberExtensions
         /// <param name="value">The value to convert.</param>
         /// <returns>The converted value.</returns>
         /// <remarks>The value will be converted according the current value of <see cref="Endianness" />.</remarks>
+        [Pure]
         public static int ToLittleEndian(this int value)
         {
             return IsLittleEndian ? value : value.Reverse();

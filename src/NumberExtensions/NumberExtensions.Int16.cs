@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Buffers.Binary;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 
 namespace ldy985.NumberExtensions
 {
@@ -20,7 +20,7 @@ namespace ldy985.NumberExtensions
         /// </remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static unsafe bool GetBit(short value, byte pos)
+        public static unsafe bool GetBit(this short value, byte pos)
         {
             // Same logic as the uint version, see that for more info
             byte flag = (byte) ((value >> pos) & 1);
@@ -28,6 +28,7 @@ namespace ldy985.NumberExtensions
             return *(bool*) &flag;
         }
 
+        [MustUseReturnValue]
         public static string ToBinary(this short value)
         {
             return Convert.ToString(value, 2).PadLeft(16, _paddingChar);
@@ -36,6 +37,7 @@ namespace ldy985.NumberExtensions
         /// <summary>Reverses the order of bytes in a 16-bit signed integer.</summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>The converted value.</returns>
+        [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static short Reverse(this short value)
         {
@@ -46,6 +48,7 @@ namespace ldy985.NumberExtensions
         /// <param name="value">The value to convert.</param>
         /// <returns>The converted value.</returns>
         /// <remarks>The value will be converted according the current value of <see cref="Endianness" />.</remarks>
+        [Pure]
         public static short ToBigEndian(this short value)
         {
             return IsBigEndian ? value : value.Reverse();
@@ -55,6 +58,7 @@ namespace ldy985.NumberExtensions
         /// <param name="value">The value to convert.</param>
         /// <returns>The converted value.</returns>
         /// <remarks>The value will be converted according the current value of <see cref="Endianness" />.</remarks>
+        [Pure]
         public static short ToLittleEndian(this short value)
         {
             return IsLittleEndian ? value : value.Reverse();

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 
 namespace ldy985.NumberExtensions
 {
@@ -27,6 +27,7 @@ namespace ldy985.NumberExtensions
             return *(bool*) &flag;
         }
 
+        [MustUseReturnValue]
         public static string ToBinary(this sbyte value)
         {
             return Convert.ToString((byte) value, 2).PadLeft(8, _paddingChar);
