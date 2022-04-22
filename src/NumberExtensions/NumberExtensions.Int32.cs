@@ -43,16 +43,6 @@ namespace ldy985.NumberExtensions
             return BinaryPrimitives.ReverseEndianness(value);
         }
 
-        /// <summary>Reverses the order of bytes in a 32-bit signed integer.</summary>
-        /// <param name="value">The value to convert.</param>
-        /// <returns>The converted value.</returns>
-        [Pure]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int Reverse2(this in int value)
-        {
-            return BinaryPrimitives.ReverseEndianness(value);
-        }
-
         /// <summary>Converts a 32-bit signed integer to big-endian format (see Remarks).</summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>The converted value.</returns>
