@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Items", "Items", "{EC4E3643
 		..\Directory.Build.props = ..\Directory.Build.props
 		..\Global.ruleset = ..\Global.ruleset
 		..\.editorconfig = ..\.editorconfig
+		..\.github\workflows\main.yml = ..\.github\workflows\main.yml
+		..\.github\workflows\nuget.yml = ..\.github\workflows\nuget.yml
 	EndProjectSection
 EndProject
 Global
