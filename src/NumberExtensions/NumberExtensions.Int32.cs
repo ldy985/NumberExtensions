@@ -30,6 +30,12 @@ public static partial class NumberExtensions
         return *(bool*)&flag;
     }
 
+    /// <summary>
+    ///     Returns the binary representation of the <see cref="int" /> value as a string.
+    /// </summary>
+    /// <param name="value">The input <see cref="int" /> value.</param>
+    /// <returns>The binary string representation.</returns>
+    [Pure]
     public static string ToBinary(this int value)
     {
         return Convert.ToString(value, 2).PadLeft(32, _paddingChar);

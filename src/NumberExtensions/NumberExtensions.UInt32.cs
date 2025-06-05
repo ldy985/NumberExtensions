@@ -38,6 +38,11 @@ public static partial class NumberExtensions
         return *(bool*)&flag;
     }
 
+    /// <summary>
+    ///     Returns the binary representation of the <see cref="uint" /> value as a string.
+    /// </summary>
+    /// <param name="value">The input <see cref="uint" /> value.</param>
+    /// <returns>The binary string representation.</returns>
     [Pure]
     public static string ToBinary(this uint value)
     {

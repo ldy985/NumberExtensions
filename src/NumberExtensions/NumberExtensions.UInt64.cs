@@ -30,6 +30,11 @@ public static partial class NumberExtensions
         return *(bool*)&flag;
     }
 
+    /// <summary>
+    ///     Returns the binary representation of the <see cref="ulong" /> value as a string.
+    /// </summary>
+    /// <param name="value">The input <see cref="ulong" /> value.</param>
+    /// <returns>The binary string representation.</returns>
     [Pure]
     public static string ToBinary(this ulong value)
     {

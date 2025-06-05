@@ -30,6 +30,11 @@ public static partial class NumberExtensions
         return *(bool*)&flag;
     }
 
+    /// <summary>
+    ///     Returns the binary representation of the <see cref="long" /> value as a string.
+    /// </summary>
+    /// <param name="value">The input <see cref="long" /> value.</param>
+    /// <returns>The binary string representation.</returns>
     [Pure]
     public static string ToBinary(this long value)
     {

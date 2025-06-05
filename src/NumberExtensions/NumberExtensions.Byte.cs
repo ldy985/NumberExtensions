@@ -6,6 +6,11 @@ namespace ldy985.NumberExtensions;
 
 public static partial class NumberExtensions
 {
+    /// <summary>
+    ///     Returns the binary representation of the <see cref="byte" /> value as a string.
+    /// </summary>
+    /// <param name="value">The input <see cref="byte" /> value.</param>
+    /// <returns>The binary string representation.</returns>
     public static string ToBinary(this byte value)
     {
         return Convert.ToString(value, 2).PadLeft(8, _paddingChar);
