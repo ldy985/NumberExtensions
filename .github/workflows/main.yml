@@ -1,19 +1,19 @@
 name: Build
 
-on: [push]
+on: [ push ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download repository
-        uses: actions/checkout@v1
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 9.0.x
 
       - name: Restore dependencies
         run: dotnet restore src/NumberExtensions.sln

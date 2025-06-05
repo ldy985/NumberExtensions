@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <Authors>Lasse Dyrsted</Authors>
-        <Copyright>Copyright 2022, by Lasse Dyrsted. All rights reserved.</Copyright>
+        <Copyright>Copyright 2025, by Lasse Dyrsted. All rights reserved.</Copyright>
 
         <!-- Set copying files etc. to timeout faster -->
         <CopyRetryCount>2</CopyRetryCount>
@@ -51,7 +51,7 @@
 
     <ItemGroup>
         <PackageReference Include="MinVer" Version="*" PrivateAssets="all"/>
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="*" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="*" PrivateAssets="all"/>
     </ItemGroup>
 
     <ItemGroup>

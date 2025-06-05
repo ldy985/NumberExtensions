@@ -1,5 +1,5 @@
-﻿using System;
-using System.Buffers.Binary;
+﻿using System.Buffers.Binary;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
@@ -22,7 +22,9 @@ public static partial class NumberExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static unsafe bool GetBit(this ulong value, byte pos)
     {
-        // Same logic as the uint version, see that for more info
+#if DEBUG
+        Debug.Assert(pos < 64, "Bit position out of range for ulong (0-63)");
+#endif
         byte flag = (byte)((value >> pos) & 1);
 
         return *(bool*)&flag;
@@ -31,7 +33,7 @@ public static partial class NumberExtensions
     [Pure]
     public static string ToBinary(this ulong value)
     {
-        return Convert.ToString((long)value, 2).PadLeft(64, _paddingChar);
+        return Convert.ToString(unchecked((long)value), 2).PadLeft(64, _paddingChar);
     }
 
     /// <summary>Reverses the order of bytes in a 64-bit unsigned integer.</summary>

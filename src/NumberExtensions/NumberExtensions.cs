@@ -1,11 +1,17 @@
-﻿using System;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace ldy985.NumberExtensions;
 
+/// <summary>
+///     Provides extension methods for numeric types, including bit manipulation, binary string conversion, and endianness
+///     utilities.
+/// </summary>
 [PublicAPI]
 public static partial class NumberExtensions
 {
+    /// <summary>
+    ///     The default padding character used for binary string representations.
+    /// </summary>
     private const char _paddingChar = '0';
 
     /// <summary>Gets the environment endianness.</summary>

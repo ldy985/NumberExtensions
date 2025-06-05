@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
@@ -9,7 +9,7 @@ public static partial class NumberExtensions
     /// <summary>
     ///     Checks whether or not a given bit is set.
     /// </summary>
-    /// <param name="value">The input <see cref="ulong" /> value.</param>
+    /// <param name="value">The input <see cref="sbyte" /> value.</param>
     /// <param name="pos">The position of the bit to check (in [0, 7] range).</param>
     /// <returns>Whether or not the n-th bit is set.</returns>
     /// <remarks>
@@ -21,15 +21,22 @@ public static partial class NumberExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static unsafe bool GetBit(this sbyte value, byte pos)
     {
-        // Same logic as the uint version, see that for more info
-        byte flag = (byte) ((value >> pos) & 1);
+#if DEBUG
+        Debug.Assert(pos < 8, "Bit position out of range for sbyte (0-7)");
+#endif
+        byte flag = (byte)((value >> pos) & 1);
 
-        return *(bool*) &flag;
+        return *(bool*)&flag;
     }
 
+    /// <summary>
+    ///     Returns the binary representation of the <see cref="sbyte" /> value as a string.
+    /// </summary>
+    /// <param name="value">The input <see cref="sbyte" /> value.</param>
+    /// <returns>The binary string representation.</returns>
     [MustUseReturnValue]
     public static string ToBinary(this sbyte value)
     {
-        return Convert.ToString((byte) value, 2).PadLeft(8, _paddingChar);
+        return Convert.ToString(unchecked((byte)value), 2).PadLeft(8, _paddingChar);
     }
 }

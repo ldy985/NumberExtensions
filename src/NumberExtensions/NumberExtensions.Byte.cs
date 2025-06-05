@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
@@ -14,7 +14,7 @@ public static partial class NumberExtensions
     /// <summary>
     ///     Checks whether or not a given bit is set.
     /// </summary>
-    /// <param name="value">The input <see cref="ulong" /> value.</param>
+    /// <param name="value">The input <see cref="byte" /> value.</param>
     /// <param name="pos">The position of the bit to check (in [0, 7] range).</param>
     /// <returns>Whether or not the n-th bit is set.</returns>
     /// <remarks>
@@ -26,9 +26,10 @@ public static partial class NumberExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static unsafe bool GetBit(this byte value, byte pos)
     {
-        // Same logic as the uint version, see that for more info
+#if DEBUG
+        Debug.Assert(pos < 8, "Bit position out of range for byte (0-7)");
+#endif
         byte flag = (byte)((value >> pos) & 1);
-
         return *(bool*)&flag;
     }
 }
